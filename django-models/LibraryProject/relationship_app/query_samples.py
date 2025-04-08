@@ -19,5 +19,5 @@ for book in books:
     print(f"- {book.title}")
     
 library_name = "lib5"
-librarian = Librarian.objects.get(library = library)
+librarian = Librarian.objects.get(library = ...)
 print(f"{librarian} who is working in {library_name}")
