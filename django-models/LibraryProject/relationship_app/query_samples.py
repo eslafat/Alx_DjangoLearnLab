@@ -12,12 +12,12 @@ for book in books:
     
     
 
-library = Library.objects.get(name=library_name)
+library = Library.objects.get(name="lib5")
 books = library.books.all()
 print(f"Books in {library.name}:")
 for book in books:
     print(f"- {book.title}")
     
 library_name = "lib5"
-librarian = Librarian.objects.get(library=library_name)
+librarian = Librarian.objects.get(library = library_name)
 print(f"{librarian} who is working in {library_name}")
