@@ -9,6 +9,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import UserCreationForm
 
+from django.contrib.auth import login
+
 
 # Create your views here.
 
