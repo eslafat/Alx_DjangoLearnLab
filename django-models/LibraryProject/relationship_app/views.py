@@ -10,6 +10,8 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import login
+from django.contrib.auth.decorators import user_passes_test
+
 
 
 # Create your views here.
@@ -35,3 +37,8 @@ class UserRegisterView(View):
             form.save()
             return redirect('login')
         return render(request, 'relationship_app/register.html', {'form': form})
+
+def role_required(role):
+    def decorator(view_func):
+        return user_passes_test(lambda u: u.is_authenticated and hasattr(u, 'userprofile') and u.userprofile.role == role)(view_func)
+    return decorator
