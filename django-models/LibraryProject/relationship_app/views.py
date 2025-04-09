@@ -38,19 +38,40 @@ class UserRegisterView(View):
             return redirect('login')
         return render(request, 'relationship_app/register.html', {'form': form})
 
-def role_required(role):
-    def decorator(view_func):
-        return user_passes_test(lambda u: u.is_authenticated and hasattr(u, 'userprofile') and u.userprofile.role == role)(view_func)
-    return decorator
+def is_admin(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-@role_required('Admin')
+def is_librarian(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
+
+def is_member(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+@user_passes_test(is_admin)
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
-@role_required('Librarian')
+@user_passes_test(is_librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
-@role_required('Member')
+@user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
+
+# def role_required(role):
+#     def decorator(view_func):
+#         return user_passes_test(lambda u: u.is_authenticated and hasattr(u, 'userprofile') and u.userprofile.role == role)(view_func)
+#     return decorator
+
+# @role_required('Admin')
+# def admin_view(request):
+#     return render(request, 'relationship_app/admin_view.html')
+
+# @role_required('Librarian')
+# def librarian_view(request):
+#     return render(request, 'relationship_app/librarian_view.html')
+
+# @role_required('Member')
+# def member_view(request):
+#     return render(request, 'relationship_app/member_view.html')
