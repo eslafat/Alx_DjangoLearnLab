@@ -42,3 +42,15 @@ def role_required(role):
     def decorator(view_func):
         return user_passes_test(lambda u: u.is_authenticated and hasattr(u, 'userprofile') and u.userprofile.role == role)(view_func)
     return decorator
+
+@role_required('Admin')
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@role_required('Librarian')
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@role_required('Member')
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
